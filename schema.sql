@@ -2,7 +2,7 @@
 drop table if exists Source;
 create table if not exists Source (
     idSource integer primary key autoincrement,
-    nameSource text
+    nameSource text unique
 );
 
 -- User
@@ -23,19 +23,20 @@ create table if not exists TypePers (
 drop table if exists Waifu;
 create table if not exists Waifu (
     idWaifu integer primary key autoincrement,
-    nameWaifu text,
+    preferredName integer,
     age integer,
-    Source_idSource integer,
     User_idUser integer,
+    Source_idSource integer not null,
+    foreign key (User_idUser) references User(idUser),
     foreign key (Source_idSource) references Source(idSource),
-    foreign key (User_idUser) references User(idUser)
+    foreign key (preferredName) references WaifuName(idWaifuName)
 );
 
 -- Alias
-drop table if exists Alias;
-create table if not exists Alias (
-    idAlias integer primary key autoincrement,
-    nameAlias text,
+drop table if exists WaifuName;
+create table if not exists WaifuName (
+    idWaifuName integer primary key autoincrement,
+    nameWaifuName text,
     Waifu_idWaifu integer,
     foreign key (Waifu_idWaifu) references Waifu(idWaifu)
 );

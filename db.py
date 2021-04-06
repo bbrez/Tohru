@@ -21,3 +21,12 @@ def exec_sql(sql):
     if cur is not None:
         cur.execute(sql)
         return cur.fetchall()
+
+def read_source(source_name):
+    'select'
+
+def create_source(source_name):
+
+
+def create_waifu(name, age, source):
+    pass

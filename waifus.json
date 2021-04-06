@@ -1,0 +1,19 @@
+{
+    "version": 0.1,
+    "waifus": [
+        {
+            "name": "YoRHa No.2 Type B",
+            "source": "Nier: Automata",
+            "age": "???",
+            "types": [ "angery", "robot" ],
+            "aliases": [ "2B" ]
+        },
+        {
+            "name": "Yuuko Yoshida",
+            "source": "Machikado Mazoku",
+            "age": 15,
+            "types": [ "kawaii", "demon" ],
+            "aliases": [ "Shamiko" ]
+        }
+    ]
+}

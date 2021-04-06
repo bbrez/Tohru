@@ -5,9 +5,14 @@ cur = None
 
 queries = {
     'source': {
-        'create': 'insert into Source (nameSource) values (?)',
+        'create': 'insert into Source (nameSource, aliasSource) values (?)',
         'read': 'select nameSource from Source where nameSource like ?',
         'readall': 'select nameSource from Source'
+    },
+    'waifu': {
+        'create': 'insert into Waifu (nameWaifu, nickWaifu) values (?, ?, ?)',
+        'read': 'select nameWaifu, nickWaifu, tierWaifu from Waifu where nameWaifu like ? or nickWaifu like ?',
+        'readall': 'select nameWaifu, nickWaifu, tierWaifu from Waifu'
     }
 }
 
@@ -16,6 +21,7 @@ def open_db():
     global con
     global cur 
     con = sqlite3.connect('WaifuBattler.db')
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
 
 def init_db():
@@ -31,10 +37,10 @@ def read_source(source_name):
     if cur is not None:
         if source_name is not None:
             cur.execute(queries['source']['read'], (source_name,))
-            return cur.fetchall()
         else:
             cur.execute(queries['source']['readall'])
-            return cur.fetchall()
+
+        return cur.fetchone()
 
 def create_source(source_name):
     if cur is not None:
@@ -47,3 +53,12 @@ def create_waifu(name, age, source):
     if cur is not None:
         pass
     pass
+
+def read_waifu(name_or_nick):
+    if cur is not None:
+        if name_or_nick is not None:
+            cur.execute(queries['waifu']['read'], (name_or_nick, name_or_nick))
+        else:
+            cur.execute(queries['waifu']['readall'])
+        
+        return cur.fetchone()

@@ -8,9 +8,18 @@ import db
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+import discord
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='&')
+
+def waifu_embed(waifu):
+    embed = discord.Embed()
+    embed.colour = discord.Colour.from_rgb(153, 00, 230)
+    embed.type = 'rich'
+    embed.title = waifu['nameWaifu']
+    embed.description = waifu['nickWaifu'] + '\n' + waifu['tierWaifu']*'*'
+    return embed
 
 @bot.event
 async def on_ready():
@@ -22,7 +31,7 @@ async def get_waifu(ctx):
         waifus = json.load(waifu_file)
 
     response = random.choice(waifus['waifus'])
-    await ctx.send(response)
+    await ctx.send(response) 
 
 @bot.command(name='addwaifu', help='Register a waifu / !register name age source')
 async def register_waifu(ctx, name: str, age: str, source: str):
@@ -50,6 +59,11 @@ async def create_source(ctx, nameSource: str):
 @bot.command(name='readsource')
 async def read_source(ctx, nameSource: str = None):
     await ctx.send(f'Sources found: {db.read_source(nameSource)}')
+
+@bot.command(name='searchwaifu', aliases=['sw'])
+async def read_waifu(ctx, nameWaifu: str = None):
+    waifu = db.read_waifu(nameWaifu)
+    await ctx.send(embed=waifu_embed(waifu))
 
 
 db.open_db()

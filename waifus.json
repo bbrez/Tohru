@@ -5,8 +5,15 @@
             "name": "YoRHa No.2 Type B",
             "source": "Nier: Automata",
             "age": "???",
-            "types": [ "angery", "robot" ],
+            "types": [ "quiet", "android" ],
             "aliases": [ "2B" ]
+        },
+        {
+            "name": "YoRHa No.2 Type A",
+            "source": "Nier: Automata",
+            "age": "???",
+            "types": [ "angery", "android" ],
+            "aliases": [ "A2" ]
         },
         {
             "name": "Yuuko Yoshida",

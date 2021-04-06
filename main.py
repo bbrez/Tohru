@@ -43,5 +43,14 @@ async def shutdown_bot(ctx):
     db.close_db()
     exit()
 
+@bot.command(name='createsource')
+async def create_source(ctx, nameSource: str):
+    await ctx.send(f'Source created: {db.create_source((nameSource,))}')
+
+@bot.command(name='readsource')
+async def read_source(ctx, nameSource: str = None):
+    await ctx.send(f'Sources found: {db.read_source((nameSource,))}')
+
+
 db.open_db()
 bot.run(TOKEN)

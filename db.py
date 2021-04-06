@@ -3,6 +3,15 @@ import sqlite3
 con = None
 cur = None
 
+queries = {
+    'source': {
+        'create': 'insert into Source (nameSource) values (?)',
+        'read': 'select nameSource from Source where nameSource like ?',
+        'readall': 'select nameSource from Source'
+    }
+}
+
+
 def open_db():
     global con
     global cur 
@@ -17,16 +26,26 @@ def init_db():
 def close_db():
     con.close()
 
-def exec_sql(sql):
-    if cur is not None:
-        cur.execute(sql)
-        return cur.fetchall()
 
 def read_source(source_name):
-    'select'
+    if cur is not None:
+        if source_name is not None:
+            cur.execute(queries['source']['read'], source_name)
+            con.commit()
+            return cur.fetchall()
+        else:
+            cur.execute(queries['source']['readall'])
+            con.commit()
+            return cur.fetchall()
 
 def create_source(source_name):
-
+    if cur is not None:
+        cur.execute(queries['source']['create'], source_name)
+        cur.execute(queries['source']['read'], source_name)
+        con.commit()
+        return cur.fetchone()
 
 def create_waifu(name, age, source):
+    if cur is not None:
+        pass
     pass

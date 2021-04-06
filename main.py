@@ -3,6 +3,7 @@ import json
 import random
 
 from dotenv import load_dotenv
+import db
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -31,4 +32,16 @@ async def register_waifu(ctx, name: str, source: str):
 async def register_waifu_alias(ctx, waifu: str, alias: str):
     await ctx.send(f'added {alias} as alias for {waifu}')
 
+
+@bot.command(name='shutdown', help='Bot is no more')
+async def shutdown_bot(ctx):
+    await ctx.send(f'Shutting down bot...')
+    db.close_db()
+    exit()
+
+@bot.command(name='testdb')
+async def testdb(ctx, sql):
+    await ctx.send(db.exec_sql(sql))
+
+db.open_db()
 bot.run(TOKEN)

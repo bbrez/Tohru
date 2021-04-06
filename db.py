@@ -4,6 +4,8 @@ con = None
 cur = None
 
 def open_db():
+    global con
+    global cur 
     con = sqlite3.connect('WaifuBattler.db')
     cur = con.cursor()
 
@@ -14,3 +16,8 @@ def init_db():
 
 def close_db():
     con.close()
+
+def exec_sql(sql):
+    if cur is not None:
+        cur.execute(sql)
+        return cur.fetchall()

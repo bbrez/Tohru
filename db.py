@@ -30,18 +30,16 @@ def close_db():
 def read_source(source_name):
     if cur is not None:
         if source_name is not None:
-            cur.execute(queries['source']['read'], source_name)
-            con.commit()
+            cur.execute(queries['source']['read'], (source_name,))
             return cur.fetchall()
         else:
             cur.execute(queries['source']['readall'])
-            con.commit()
             return cur.fetchall()
 
 def create_source(source_name):
     if cur is not None:
-        cur.execute(queries['source']['create'], source_name)
-        cur.execute(queries['source']['read'], source_name)
+        cur.execute(queries['source']['create'], (source_name,))
+        cur.execute(queries['source']['read'], (source_name,))
         con.commit()
         return cur.fetchone()
 

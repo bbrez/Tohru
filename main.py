@@ -2,39 +2,25 @@ import os
 import json
 import random
 
-import discord
 from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
 
-client = discord.Client()
+from discord.ext import commands
 
+bot = commands.Bot(command_prefix='!')
 
-@client.event
+@bot.event
 async def on_ready():
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    print(
-        f'{client.user} -> {guild.name}'
-    )
+    print(f'{bot.user.name} connected!')
 
+@bot.command(name='waifu', help='Gives you a random waifu')
+async def waifu(ctx):
+    with open('waifus.json' 'r') as waifu_file:
+        waifus = json.load(waifu_file)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    
-    if message.content == '!waifu':
-        with open('waifus.json', 'r') as waifu_file:
-            waifus = json.load(waifu_file)
+    response = random.choice(waifus['waifus'])
+    await ctx.send(response)
 
-        waifu = random.choice(waifus['waifus'])
-        await message.channel.send(f'Your waifu is: {waifu}')
-        
-    elif message.conent == 'raise-exception':
-        raise discord.DiscordException
-
-
-if __name__ == '__main__':
-    client.run(TOKEN)
+bot.run(TOKEN)

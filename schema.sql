@@ -27,6 +27,7 @@ create table if not exists Waifu (
     nameWaifu text,
     nickWaifu text,
     tierWaifu integer,
+    imageURLWaifu text,
     User_idUser integer,
     Source_idSource integer not null,
     foreign key (User_idUser) references User(idUser),

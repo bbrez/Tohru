@@ -10,9 +10,9 @@ queries = {
         'readall': 'select nameSource from Source'
     },
     'waifu': {
-        'create': 'insert into Waifu (nameWaifu, nickWaifu) values (?, ?, ?)',
-        'read': 'select nameWaifu, nickWaifu, tierWaifu from Waifu where nameWaifu like ? or nickWaifu like ?',
-        'readall': 'select nameWaifu, nickWaifu, tierWaifu from Waifu'
+        'create': 'insert into Waifu (nameWaifu, nickWaifu, tierWaifu, imageURLWaifu) values (?, ?, ?, ?)',
+        'read': 'select * from Waifu inner join Source S on S.idSource = Waifu.Source_idSource where nameWaifu like ? or nickWaifu like ?',
+        'readall': 'select * from Waifu'
     }
 }
 
@@ -49,10 +49,11 @@ def create_source(source_name):
         con.commit()
         return cur.fetchone()
 
-def create_waifu(name, age, source):
+def create_waifu(name, alias, tier, image_url, source):
     if cur is not None:
         pass
     pass
+
 
 def read_waifu(name_or_nick):
     if cur is not None:

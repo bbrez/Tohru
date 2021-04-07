@@ -47,15 +47,6 @@ async def get_waifu(ctx):
     response = random.choice(waifus['waifus'])
     await ctx.send(response) 
 
-@bot.command(name='addwaifu', help='Register a waifu / !register name age source')
-async def register_waifu(ctx, name: str, age: str, source: str):
-    await ctx.send(f'registered: {name}, {age} y/o from {source}')
-
-@bot.command(name='addalias', help='Adds an alias to a registered Waifu / !register waifu alias')
-async def register_waifu_alias(ctx, waifu: str, alias: str):
-    await ctx.send(f'added {alias} as alias for {waifu}')
-
-
 @bot.command(name='initdb')
 async def initdb(ctx):
     db.init_db()
@@ -67,18 +58,39 @@ async def shutdown_bot(ctx):
     exit()
 
 @bot.command(name='createsource')
-async def create_source(ctx, nameSource: str):
+async def create_source(ctx, nameSource:str):
     await ctx.send(f'Source created: {db.create_source(nameSource)}')
 
 @bot.command(name='readsource')
-async def read_source(ctx, nameSource: str = None):
+async def read_source(ctx, nameSource:str = None):
     await ctx.send(f'Sources found: {db.read_source(nameSource)}')
 
+@bot.command(name='addwaifu', aliases=['aw'])
+#async def create_waifu(ctx, name:str, tier:str, source:str):
+async def create_waifu(ctx, *, args):
+
+    args_keys = ['name', 'tier', 'source']
+    args = args.split(',', 3)
+    args = [x.strip() for x in args]
+
+    waifu = db.create_waifu(args[0], args[1], args[2])
+    await ctx.send('Created waifu:', embed=waifu_embed(waifu))
+
 @bot.command(name='searchwaifu', aliases=['sw'])
-async def read_waifu(ctx, nameWaifu: str = None):
+async def read_waifu(ctx, nameWaifu:str = None):
     waifu = db.read_waifu(nameWaifu)
     await ctx.send(embed=waifu_embed(waifu))
 
+@bot.command(name='addwaifualias', aliases=['awa'])
+async def add_waifu_alias(ctx, name:str, alias:str):
+    db.add_waifu_alias(name, alias)
+    await ctx.send(f"Alias {alias} added for {name}")
+
+@bot.command(name='addwaifuurl', aliases=['awu'])
+async def add_waifu_image(ctx, name:str, url:str):
+    db.add_waifu_image(name, url)
+    await ctx.send(f"Image added for {name}")
+    
 
 db.open_db()
 bot.run(TOKEN)

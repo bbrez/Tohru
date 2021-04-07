@@ -29,7 +29,7 @@ def open_db():
 
 def init_db():
     if cur is not None:
-        with open('schema.sql', 'r', encoding='utf-8') as schema_file:
+        with open('sql/schema.sql', 'r', encoding='utf-8') as schema_file:
             cur.executescript(schema_file.read())
 
 def close_db():

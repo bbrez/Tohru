@@ -14,23 +14,25 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix='&')
 
 def waifu_embed(waifu):
+    print('Building Embed Waifu')
     for key in waifu.keys():
         print(f'{key} = {waifu[key]}')
     embed = discord.Embed()
-    embed.colour = discord.Colour.from_rgb(153, 00, 230)
     embed.type = 'rich'
-    embed.title = waifu['nameWaifu']
+    embed.title = '『' + waifu['nameWaifu'] + '』'
 
     desc = ''
     if waifu['nickWaifu'] is not None:
         desc = desc + 'Alias: ' + waifu['nickWaifu'] + '\n'
     
     embed.description = desc + waifu['tierWaifu']*'★'+ (6-waifu['tierWaifu'])*'☆'
+    tier_colors = ((232, 232, 232), (102, 204, 0), (0, 85, 255), (204, 204, 0), (230, 38, 0), (102, 0, 153))
+    embed.colour = discord.Colour.from_rgb(tier_colors[waifu['tierWaifu']-1][0], tier_colors[waifu['tierWaifu']-1][1], tier_colors[waifu['tierWaifu']-1][2])
 
     if waifu['imageURLWaifu'] is not None:
         embed.set_image(url=waifu['imageURLWaifu'])
     
-    embed.footer = 'Source: ' waifu['nameSource']
+    embed.set_footer(text='Source: ' + waifu['nameSource'])
     return embed
 
 @bot.event

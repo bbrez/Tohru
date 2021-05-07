@@ -26,44 +26,57 @@ async def on_ready():
 
 
 @slash.slash(
-    name='pers',
-    description='Procura um personagem no AniList',
+    name='char',
+    description='Searcher a character on AniList',
     options=[
         create_option(
-            name='nome',
-            description='Nome do personagem',
+            name='name',
+            description='Character Name',
             option_type=SlashCommandOptionType.STRING,
             required=True
         )
     ]
 )
-async def character(ctx, *, nome):
-    char = anilist_api.find_char(nome)
+async def character(ctx, *, name):
+    char = anilist_api.find_char(name)
     if char is not None:
         pprint.pprint(char)
         await ctx.send(embed=embed.waifu_embed(char))
     else:
-        await ctx.send(f'Personagem {nome} não encontrado')
+        await ctx.send(f'Character {name} not found')
 
 
 @slash.slash(
     name='anime',
-    description='Procura um anime no AniList',
+    description='Searches an anime on AniList',
     options=[
         create_option(
-            name='nome',
-            description='Nome do anime',
+            name='name',
+            description='Anime name',
             option_type=SlashCommandOptionType.STRING,
             required=True
         )
     ]
 )
-async def anime(ctx, *, nome):
-    f_anime = anilist_api.find_anime(nome)
+async def anime(ctx, *, name):
+    f_anime = anilist_api.find_anime(name)
     if f_anime is not None:
         pprint.pprint(f_anime)
         await ctx.send(embed=embed.anime_embed(f_anime))
     else:
-        await ctx.send(f'Anime {nome} não encontrado')
+        await ctx.send(f'Anime {name} not found')
+
+
+@slash.slash(
+    name='trending',
+    description='Top 5 Trending anime'
+)
+async def trending(ctx):
+    f_anime = anilist_api.get_trending()
+    if f_anime is not None:
+        pprint.pprint(f_anime)
+        await ctx.send(embed=embed.trending_embed(f_anime))
+    else:
+        await ctx.send('Error getting trending anime')
 
 bot.run(TOKEN)

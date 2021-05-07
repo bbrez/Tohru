@@ -65,3 +65,26 @@ def anime_embed(anime):
     embed.description = desc
     embed.set_footer(text='source: Anilist.co', icon_url='https://anilist.co/img/icons/android-chrome-512x512.png')
     return embed
+
+
+def trending_embed(animes):
+    embed = discord.Embed()
+    embed.type = 'rich'
+
+    embed.title = 'Trending Top 5:'
+
+    desc = ''
+    for idx, anime in enumerate(animes, start=1):
+        desc += f'{idx} - [{anime["title"]["userPreferred"]}]({anime["siteUrl"]})\n'
+
+    embed.description = desc
+
+    embed.set_image(url=animes[0]['coverImage']['extraLarge'])
+
+    colours = animes[0]['coverImage']['color'].lstrip('#')
+    colours = tuple(int(colours[i:i + 2], 16) for i in (0, 2, 4))
+    embed.colour = discord.Colour.from_rgb(colours[0], colours[1], colours[2])
+
+    embed.set_footer(text='source: Anilist.co', icon_url='https://anilist.co/img/icons/android-chrome-512x512.png')
+
+    return embed

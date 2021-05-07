@@ -17,7 +17,6 @@ def find_char(query_character):
 
     response = requests.post(url, json={'query': query, 'variables': variables})
     character = response.json()['data']['Character']
-    pprint.pprint(character)
 
     return character
 
@@ -35,6 +34,20 @@ def find_anime(query_anime):
 
     response = requests.post(url, json={'query': query, 'variables': variables})
     anime = response.json()['data']['Media']
-    pprint.pprint(anime)
+
+    return anime
+
+
+def get_trending():
+    query = None
+    with open('queries/trending.ql', 'r') as query_file:
+        query = query_file.read()
+
+    variables = {
+        'pp': 5
+    }
+
+    response = requests.post(url, json={'query': query, 'variables': variables})
+    anime = response.json()['data']['Page']['media']
 
     return anime

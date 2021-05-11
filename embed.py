@@ -81,9 +81,10 @@ def trending_embed(animes):
 
     embed.set_image(url=animes[0]['coverImage']['extraLarge'])
 
-    colours = animes[0]['coverImage']['color'].lstrip('#')
-    colours = tuple(int(colours[i:i + 2], 16) for i in (0, 2, 4))
-    embed.colour = discord.Colour.from_rgb(colours[0], colours[1], colours[2])
+    if animes[0]['coverImage']['color'] is not None:
+        colours = animes[0]['coverImage']['color'].lstrip('#')
+        colours = tuple(int(colours[i:i + 2], 16) for i in (0, 2, 4))
+        embed.colour = discord.Colour.from_rgb(colours[0], colours[1], colours[2])
 
     embed.set_footer(text='source: Anilist.co', icon_url='https://anilist.co/img/icons/android-chrome-512x512.png')
 

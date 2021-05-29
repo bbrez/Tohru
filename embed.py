@@ -4,33 +4,34 @@ import re
 import discord
 
 
-def waifu_embed(waifu):
+def character_embed(character):
     embed = discord.Embed()
     embed.type = 'rich'
 
-    embed.url = waifu['siteUrl']
-    embed.title = waifu['name']['full']
-    embed.set_image(url=waifu['image']['large'])
+    embed.url = character['siteUrl']
+    embed.title = character['name']['full']
+    embed.set_image(url=character['image']['large'])
 
     names = list()
-    if len(waifu['name']['alternative'][0]) > 0:
-        names.extend(waifu['name']['alternative'])
+    if len(character['name']['alternative'][0]) > 0:
+        names.extend(character['name']['alternative'])
 
-    if len(waifu['name']['alternativeSpoiler'][0]) > 0:
-        names.extend(waifu['name']['alternativeSpoiler'])
+    if len(character['name']['alternativeSpoiler'][0]) > 0:
+        names.extend(character['name']['alternativeSpoiler'])
 
-    names.append(waifu['name']['native'])
+    names.append(character['name']['native'])
     pprint.pprint(names)
 
     desc = f'_{", ".join(names)}_\n\n'
-    waifu['description'] = re.sub("[<].*?[>]|_+", "", waifu['description'])
-    desc += waifu['description']
+    character['description'] = re.sub("[<].*?[>]|_+", "", character['description']) #Removes underlines from description
+    character['description'] = re.sub("~!|!~", "||", character['description']) #Changes spoiler notation to Discord's
+    desc += character['description']
 
     if len(desc) > 2048:
         desc = desc[:2045]+'...'
 
     embed.description = desc
-    embed.add_field(name="Favourites", value=waifu['favourites'])
+    embed.add_field(name="Favourites", value=character['favourites'])
     embed.set_footer(text='source: AniList.co', icon_url='https://anilist.co/img/icons/android-chrome-512x512.png')
     return embed
 

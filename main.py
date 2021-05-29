@@ -41,7 +41,7 @@ async def character(ctx, *, name):
     char = anilist_api.find_char(name)
     if char is not None:
         pprint.pprint(char)
-        await ctx.send(embed=embed.waifu_embed(char))
+        await ctx.send(embed=embed.character_embed(char))
     else:
         await ctx.send(f'Character {name} not found')
 

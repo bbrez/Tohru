@@ -1,9 +1,7 @@
 import os
 import pprint
 
-from dotenv import load_dotenv
-
-from discord.ext import commands
+from discord.ext import commands #upm package(discord.py)
 
 from discord_slash import SlashCommand
 from discord_slash.model import SlashCommandOptionType
@@ -12,8 +10,8 @@ from discord_slash.utils.manage_commands import create_option
 import anilist_api
 import embed
 
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+
+TOKEN = os.environ['DISCORD_TOKEN']
 
 
 bot = commands.Bot(command_prefix='&')

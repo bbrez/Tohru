@@ -1,5 +1,4 @@
 import requests
-import pprint
 
 url = 'https://graphql.anilist.co'
 

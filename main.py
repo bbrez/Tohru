@@ -1,9 +1,9 @@
 import os
 import pprint
 
-from discord.ext import commands #upm package(discord.py)
+from discord.ext import commands
 
-from discord_slash import SlashCommand
+from discord_slash import SlashCommand #upm package(discord-py-slash-command)
 from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option
 

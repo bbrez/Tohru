@@ -37,6 +37,22 @@ def find_anime(query_anime):
     return anime
 
 
+def find_manga(query_manga):
+	print(query_manga)
+
+	query = None
+	with open('queries/manga.ql', 'r') as query_file:
+		query = query_file.read()
+
+	variables = {
+		'manga': query_manga
+	}
+
+	response = requests.post(url, json={'query': query, 'variables': variables})
+	manga = response.json()['data']['Media']
+
+	return manga
+
 def get_trending():
     query = None
     with open('queries/trending.ql', 'r') as query_file:
@@ -50,3 +66,19 @@ def get_trending():
     anime = response.json()['data']['Page']['media']
 
     return anime
+
+
+def get_trending_manga():
+	query = None
+
+	with open('queries/trending_manga.ql', 'r') as query_file:
+		query = query_file.read()
+	
+	variables = {
+	    'pp': 5
+    }
+
+	response = requests.post(url, json={'query': query, 'variables': variables})
+	manga = response.json()['data']['Page']['media']
+
+	return manga

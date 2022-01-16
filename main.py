@@ -1,15 +1,13 @@
 import os
 import pprint
 
-from discord.ext import commands
+from discord.ext import commands #upm package(py-cord)
 from discord.commands.options import Option
 
 import anilist_api
 import embed
 
-import dotenv
 
-dotenv.load_dotenv()
 TOKEN = os.environ['DISCORD_TOKEN']
 
 

@@ -12,7 +12,6 @@ TOKEN = os.environ['DISCORD_TOKEN']
 
 
 bot = commands.Bot(command_prefix='&')
-# slash = SlashCommand(client=bot, sync_commands=True)
 
 
 @bot.event
@@ -27,9 +26,9 @@ async def character(
 	char = anilist_api.find_char(name)
 	if char is not None:
 		pprint.pprint(char)
-		await ctx.send(embed=embed.character_embed(char))
+		await ctx.respond(embed=embed.character_embed(char))
 	else:
-		await ctx.send(f'Character {name} not found')
+		await ctx.respond(f'Character {name} not found')
 
 
 
@@ -40,9 +39,9 @@ async def anime(
 	f_anime = anilist_api.find_anime(name)
 	if f_anime is not None:
 		pprint.pprint(f_anime)
-		await ctx.send(embed=embed.anime_embed(f_anime))
+		await ctx.respond(embed=embed.anime_embed(f_anime))
 	else:
-		await ctx.send(f'Anime {name} not found')
+		await ctx.respond(f'Anime {name} not found')
 
 
 @bot.slash_command()
@@ -52,15 +51,15 @@ async def manga(
 	f_manga = anilist_api.find_manga(name)
 	if f_manga is not None:
 		pprint.pprint(f_manga)
-		await ctx.send(embed=embed.anime_embed(f_manga))
+		await ctx.respond(embed=embed.anime_embed(f_manga))
 	else:
-		await ctx.send(f'Manga {name} not found')
+		await ctx.respond(f'Manga {name} not found')
 
 
 @bot.slash_command()
 async def trending(
 	ctx,
-	mediatype: Option(str, 'Type of media', choices=['Anime', 'Manga'])):
+	mediatype: Option(str, 'Type of media', choices=['Anime', 'Manga'], default='Anime')):
 	'''Shows trending manga or anime'''
 	if mediatype is None:
 		mediatype = 'anime'
@@ -70,11 +69,11 @@ async def trending(
 	elif mediatype.lower() == 'anime':
 		f_anime = anilist_api.get_trending()
 	else:
-		await ctx.send(f'mediatype {mediatype} not found')
+		await ctx.respond(f'mediatype {mediatype} not found')
 
 	if f_anime is not None:
 		pprint.pprint(f_anime)
-		await ctx.send(embed=embed.trending_embed(f_anime))
+		await ctx.respond(embed=embed.trending_embed(f_anime))
 
 
 

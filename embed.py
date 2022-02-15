@@ -13,11 +13,17 @@ def character_embed(character):
     embed.set_image(url=character['image']['large'])
 
     names = list()
-    if len(character['name']['alternative'][0]) > 0:
-        names.extend(character['name']['alternative'])
+    try:
+        if len(character['name']['alternative'][0]) > 0:
+        	names.extend(character['name']['alternative'])
+    except Exception:
+        print('Character has no alternative name')
 
-    if len(character['name']['alternativeSpoiler'][0]) > 0:
-        names.extend(character['name']['alternativeSpoiler'])
+    try:
+        if len(character['name']['alternativeSpoiler'][0]) > 0:
+        	names.extend(character['name']['alternativeSpoiler'])
+    except Exception:
+	    print('Character has no alternativeSpoiler name')
 
     names.append(character['name']['native'])
     pprint.pprint(names)
